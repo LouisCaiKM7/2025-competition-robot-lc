@@ -8,15 +8,21 @@ import com.pathplanner.lib.util.FileVersionException;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.auto.basics.AutoActions;
+import frc.robot.commands.ElevatordownCommand;
+import frc.robot.commands.ElevatorupCommand;
+import frc.robot.commands.ElevatordownCommand;
 import frc.robot.display.Display;
 import frc.robot.subsystems.apriltagvision.AprilTagVision;
 import frc.robot.subsystems.apriltagvision.AprilTagVisionIONorthstar;
+import frc.robot.subsystems.elevator.ElevatorIOTalonFX;
+import frc.robot.subsystems.elevator.ElevatorSubsystem;
 import frc.robot.subsystems.swerve.Swerve;
 import frc.robot.utils.AllianceFlipUtil;
 import lombok.Getter;
@@ -44,6 +50,7 @@ public class RobotContainer {
     CommandXboxController operatorController = new CommandXboxController(1);
     Display display = Display.getInstance();
     double lastResetTime = 0.0;
+      ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOTalonFX());
     // The robot's subsystems and commands are defined here...
 
     /**
@@ -99,7 +106,10 @@ public class RobotContainer {
                                         swerve.getLocalizer().getLatestPose().getRotation()));
                     }
                     lastResetTime = Timer.getFPGATimestamp();
+                    
                 }).ignoringDisable(true));
+                RobotConstants.driverController.a().whileTrue(elevatorupCommand());
+                RobotConstants.driverController.b().whileTrue(elevatordownCommand());
     }
 
     /**
@@ -116,6 +126,14 @@ public class RobotContainer {
                 AutoActions.waitFor(0.000001),
                 AutoActions.followTrajectory(AutoActions.getTrajectory("T_4"), true, true)
         );
+    }
+
+    
+    private Command elevatorupCommand(){
+        return new ElevatorupCommand(elevatorSubsystem);
+    }
+    private Command elevatordownCommand(){
+        return new ElevatordownCommand(elevatorSubsystem);
     }
 
     public FieldConstants.AprilTagLayoutType getAprilTagLayoutType() {
