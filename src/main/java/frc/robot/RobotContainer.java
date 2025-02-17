@@ -7,30 +7,29 @@ package frc.robot;
 import com.pathplanner.lib.util.FileVersionException;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj2.command.button.*;
 import frc.robot.auto.basics.AutoActions;
-import frc.robot.commands.FunnelIntakeCommand;
-import frc.robot.commands.GroundIntakeCommand;
-import frc.robot.commands.PutCoralCommand;
+//import frc.robot.commands.FunnelIntakeCommand;
+//import frc.robot.commands.GroundIntakeCommand;
+//import frc.robot.commands.PutCoralCommand;
 import frc.robot.commands.RumbleCommand;
 import frc.robot.display.Display;
-import frc.robot.subsystems.beambreak.BeambreakIOReal;
-import frc.robot.subsystems.elevator.ElevatorIOReal;
-import frc.robot.subsystems.elevator.ElevatorIOSim;
-import frc.robot.subsystems.endeffector.EndEffectorIOSim;
-import frc.robot.subsystems.beambreak.BeambreakIOSim;
-
-import frc.robot.subsystems.elevator.ElevatorSubsystem;
-import frc.robot.subsystems.endeffector.EndEffectorIOReal;
-import frc.robot.subsystems.endeffector.EndEffectorSubsystem;
-import frc.robot.subsystems.intake.IntakeRollerIOReal;
-import frc.robot.subsystems.intake.IntakeRollerIOSim;
-import frc.robot.subsystems.intake.IntakePivotIOReal;
-import frc.robot.subsystems.intake.IntakePivotIOSim;
-import frc.robot.subsystems.intake.IntakeSubsystem;
+//import frc.robot.subsystems.beambreak.BeambreakIOReal;
+//import frc.robot.subsystems.elevator.ElevatorIOReal;
+//import frc.robot.subsystems.elevator.ElevatorIOSim;
+//import frc.robot.subsystems.endeffector.EndEffectorIOSim;
+//import frc.robot.subsystems.beambreak.BeambreakIOSim;
+//
+//import frc.robot.subsystems.elevator.ElevatorSubsystem;
+//import frc.robot.subsystems.endeffector.EndEffectorIOReal;
+//import frc.robot.subsystems.endeffector.EndEffectorSubsystem;
+//import frc.robot.subsystems.intake.IntakeRollerIOReal;
+//import frc.robot.subsystems.intake.IntakeRollerIOSim;
+//import frc.robot.subsystems.intake.IntakePivotIOReal;
+//import frc.robot.subsystems.intake.IntakePivotIOSim;
+//import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.apriltagvision.AprilTagVision;
 import frc.robot.subsystems.apriltagvision.AprilTagVisionIONorthstar;
 import frc.robot.subsystems.swerve.Swerve;
@@ -67,9 +66,9 @@ public class RobotContainer {
             new AprilTagVisionIONorthstar(this::getAprilTagLayoutType, 1));
     Swerve swerve = Swerve.getInstance();
     Display display = Display.getInstance();
-    ElevatorSubsystem elevatorSubsystem;
-    EndEffectorSubsystem endEffectorSubsystem;
-    IntakeSubsystem intakeSubsystem;
+//    ElevatorSubsystem elevatorSubsystem;
+//    EndEffectorSubsystem endEffectorSubsystem;
+//    IntakeSubsystem intakeSubsystem;
 
     //important flags for state logic
     public static boolean elevatorIsDanger;
@@ -82,7 +81,7 @@ public class RobotContainer {
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
-        configureSubsystems();
+//        configureSubsystems();
         updateManager = new UpdateManager(swerve,
                 display);
         updateManager.registerAll();
@@ -103,17 +102,17 @@ public class RobotContainer {
      * joysticks}.
      */
 
-     public void configureSubsystems(){
-        if (RobotBase.isReal()) {
-                elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOReal());
-                endEffectorSubsystem = new EndEffectorSubsystem(new EndEffectorIOReal(), new BeambreakIOReal(RobotConstants.BeamBreakConstants.ENDEFFECTOR_MIDDLE_BEAMBREAK_ID), new BeambreakIOReal(RobotConstants.BeamBreakConstants.ENDEFFECTOR_EDGE_BEAMBREAK_ID));
-                intakeSubsystem = new IntakeSubsystem(new IntakePivotIOReal(),new IntakeRollerIOReal());
-        }else{
-                elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOSim());
-                endEffectorSubsystem = new EndEffectorSubsystem(new EndEffectorIOSim(), new BeambreakIOSim(RobotConstants.BeamBreakConstants.ENDEFFECTOR_MIDDLE_BEAMBREAK_ID), new BeambreakIOSim(RobotConstants.BeamBreakConstants.ENDEFFECTOR_EDGE_BEAMBREAK_ID));
-                intakeSubsystem = new IntakeSubsystem(new IntakePivotIOSim(), new IntakeRollerIOSim());
-        }
-     }
+//     public void configureSubsystems(){
+//        if (RobotBase.isReal()) {
+//                elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOReal());
+//                endEffectorSubsystem = new EndEffectorSubsystem(new EndEffectorIOReal(), new BeambreakIOReal(RobotConstants.BeamBreakConstants.ENDEFFECTOR_MIDDLE_BEAMBREAK_ID), new BeambreakIOReal(RobotConstants.BeamBreakConstants.ENDEFFECTOR_EDGE_BEAMBREAK_ID));
+//                intakeSubsystem = new IntakeSubsystem(new IntakePivotIOReal(),new IntakeRollerIOReal());
+//        }else{
+//                elevatorSubsystem = new ElevatorSubsystem(new ElevatorIOSim());
+//                endEffectorSubsystem = new EndEffectorSubsystem(new EndEffectorIOSim(), new BeambreakIOSim(RobotConstants.BeamBreakConstants.ENDEFFECTOR_MIDDLE_BEAMBREAK_ID), new BeambreakIOSim(RobotConstants.BeamBreakConstants.ENDEFFECTOR_EDGE_BEAMBREAK_ID));
+//                intakeSubsystem = new IntakeSubsystem(new IntakePivotIOSim(), new IntakeRollerIOSim());
+//        }
+//     }
 
     //Define all commands here
     // private final Command groundIntakeCommand = new Command() {
@@ -211,11 +210,11 @@ public class RobotContainer {
                 }).ignoringDisable(true));
 
                 
-        driverController.rightBumper().whileTrue(new GroundIntakeCommand(intakeSubsystem, endEffectorSubsystem, elevatorSubsystem));
-        driverController.rightTrigger().whileTrue(new PutCoralCommand(endEffectorSubsystem, elevatorSubsystem, intakeSubsystem,L3_EXTENSION_METERS.get()));
-        driverController.leftBumper().whileTrue(new FunnelIntakeCommand(elevatorSubsystem, endEffectorSubsystem, intakeSubsystem));
-        driverController.povDown().onTrue(Commands.runOnce(() -> elevatorSubsystem.setElevatorState(ElevatorSubsystem.WantedState.ZERO)));
-        driverController.start().onTrue(Commands.runOnce(() -> intakeSubsystem.setWantedState(IntakeSubsystem.WantedState.GROUNDZERO)));
+//        driverController.rightBumper().whileTrue(new GroundIntakeCommand(intakeSubsystem, endEffectorSubsystem, elevatorSubsystem));
+//        driverController.rightTrigger().whileTrue(new PutCoralCommand(endEffectorSubsystem, elevatorSubsystem, intakeSubsystem,L3_EXTENSION_METERS.get()));
+//        driverController.leftBumper().whileTrue(new FunnelIntakeCommand(elevatorSubsystem, endEffectorSubsystem, intakeSubsystem));
+//        driverController.povDown().onTrue(Commands.runOnce(() -> elevatorSubsystem.setElevatorState(ElevatorSubsystem.WantedState.ZERO)));
+//        driverController.start().onTrue(Commands.runOnce(() -> intakeSubsystem.setWantedState(IntakeSubsystem.WantedState.GROUNDZERO)));
     }
 
     //Configure all commands for operator
@@ -225,26 +224,26 @@ public class RobotContainer {
 
     //Configure all commands for testing
     private void configureTesterBindings(CommandXboxController controller) {
-        //test of endeffector state machine
-        controller.povLeft().onTrue(Commands.runOnce(() -> endEffectorSubsystem.setWantedState(EndEffectorSubsystem.WantedState.FUNNEL_INTAKE)));
-        controller.povRight().onTrue(Commands.runOnce(() -> endEffectorSubsystem.setWantedState(EndEffectorSubsystem.WantedState.GROUND_INTAKE)));
-        controller.povUp().onTrue(Commands.runOnce(() -> endEffectorSubsystem.setWantedState(EndEffectorSubsystem.WantedState.SHOOT)));
-
-        //test of elevator state machine
-        controller.a().onTrue(Commands.runOnce(() -> elevatorSubsystem.setElevatorPosition(L1_EXTENSION_METERS.get())));
-        controller.b().onTrue(Commands.runOnce(() -> elevatorSubsystem.setElevatorPosition(L2_EXTENSION_METERS.get())));
-        controller.x().onTrue(Commands.runOnce(() -> elevatorSubsystem.setElevatorPosition(L3_EXTENSION_METERS.get())));
-        controller.y().onTrue(Commands.runOnce(() -> elevatorSubsystem.setElevatorPosition(L4_EXTENSION_METERS.get())));
-
-        //test of intake states
-        
-        controller.rightBumper().onTrue((Commands.runOnce(() -> intakeSubsystem.setWantedState(IntakeSubsystem.WantedState.DEPLOY_INTAKE))));
-        controller.leftBumper().onTrue((Commands.runOnce(() -> intakeSubsystem.setWantedState(IntakeSubsystem.WantedState.GROUNDZERO))));
-        controller.rightTrigger().onTrue((Commands.runOnce(() -> intakeSubsystem.setWantedState(IntakeSubsystem.WantedState.FUNNEL_AVOID))));
-        controller.leftTrigger().onTrue((Commands.runOnce(() -> intakeSubsystem.setWantedState(IntakeSubsystem.WantedState.HOME))));
-        controller.povUp().onTrue((Commands.runOnce(() -> intakeSubsystem.setWantedState(IntakeSubsystem.WantedState.TREMBLE_INTAKE))));
-        controller.povDown().onTrue((Commands.runOnce(() -> intakeSubsystem.setWantedState(IntakeSubsystem.WantedState.OUTTAKE))));
-        
+//        //test of endeffector state machine
+//        controller.povLeft().onTrue(Commands.runOnce(() -> endEffectorSubsystem.setWantedState(EndEffectorSubsystem.WantedState.FUNNEL_INTAKE)));
+//        controller.povRight().onTrue(Commands.runOnce(() -> endEffectorSubsystem.setWantedState(EndEffectorSubsystem.WantedState.GROUND_INTAKE)));
+//        controller.povUp().onTrue(Commands.runOnce(() -> endEffectorSubsystem.setWantedState(EndEffectorSubsystem.WantedState.SHOOT)));
+//
+//        //test of elevator state machine
+//        controller.a().onTrue(Commands.runOnce(() -> elevatorSubsystem.setElevatorPosition(L1_EXTENSION_METERS.get())));
+//        controller.b().onTrue(Commands.runOnce(() -> elevatorSubsystem.setElevatorPosition(L2_EXTENSION_METERS.get())));
+//        controller.x().onTrue(Commands.runOnce(() -> elevatorSubsystem.setElevatorPosition(L3_EXTENSION_METERS.get())));
+//        controller.y().onTrue(Commands.runOnce(() -> elevatorSubsystem.setElevatorPosition(L4_EXTENSION_METERS.get())));
+//
+//        //test of intake states
+//
+//        controller.rightBumper().onTrue((Commands.runOnce(() -> intakeSubsystem.setWantedState(IntakeSubsystem.WantedState.DEPLOY_INTAKE))));
+//        controller.leftBumper().onTrue((Commands.runOnce(() -> intakeSubsystem.setWantedState(IntakeSubsystem.WantedState.GROUNDZERO))));
+//        controller.rightTrigger().onTrue((Commands.runOnce(() -> intakeSubsystem.setWantedState(IntakeSubsystem.WantedState.FUNNEL_AVOID))));
+//        controller.leftTrigger().onTrue((Commands.runOnce(() -> intakeSubsystem.setWantedState(IntakeSubsystem.WantedState.HOME))));
+//        controller.povUp().onTrue((Commands.runOnce(() -> intakeSubsystem.setWantedState(IntakeSubsystem.WantedState.TREMBLE_INTAKE))));
+//        controller.povDown().onTrue((Commands.runOnce(() -> intakeSubsystem.setWantedState(IntakeSubsystem.WantedState.OUTTAKE))));
+//
     }
 
     //Configure all commands for Stream Deck
