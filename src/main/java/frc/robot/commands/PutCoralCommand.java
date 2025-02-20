@@ -16,7 +16,7 @@ public class PutCoralCommand extends ParallelCommandGroup {
                 Commands.parallel(
                         new PreShootCommand(endeffectorSubsystem, intakeSubsystem, elevatorSubsystem),
                         Commands.sequence(
-                                new WaitUntilCommand(() -> (driverController.rightTrigger().getAsBoolean() && endeffectorSubsystem.isShootReady())),
+                                new WaitUntilCommand(() -> (driverController.rightBumper().getAsBoolean() && endeffectorSubsystem.isShootReady())),
                                 new ShootCommand(endeffectorSubsystem)
                         )
                 )
